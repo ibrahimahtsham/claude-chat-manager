@@ -1,0 +1,10 @@
+{
+  "name": "claude-chat-manager",
+  "version": "1.0.0",
+  "description": "Local web UI for browsing, searching, renaming and cleaning up Claude Code terminal chat sessions.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "private": true
+}

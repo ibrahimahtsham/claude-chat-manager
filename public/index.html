@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude Chat Manager</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Claude Chats</h1>
+      </div>
+
+      <div class="search-box">
+        <input id="search-input" type="text" placeholder="Search all chats..." />
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="projects">Projects</button>
+        <button class="tab" data-tab="trash">Trash</button>
+      </div>
+
+      <div id="panel-projects" class="panel active">
+        <select id="project-select"></select>
+        <div id="session-list" class="list"></div>
+      </div>
+
+      <div id="panel-trash" class="panel">
+        <div id="trash-list" class="list"></div>
+      </div>
+
+      <div id="panel-search" class="panel">
+        <div id="search-list" class="list"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div id="empty-state" class="empty-state">
+        <p>Select a chat on the left to view it.</p>
+      </div>
+
+      <div id="session-view" class="session-view" hidden>
+        <div class="session-header">
+          <div class="session-title-row">
+            <h2 id="session-title"></h2>
+            <button id="rename-btn" class="icon-btn" title="Rename">✎</button>
+          </div>
+          <div class="session-meta">
+            <span id="session-cwd"></span>
+            <span id="session-dates"></span>
+          </div>
+          <div class="session-actions">
+            <button id="copy-md-btn" class="btn">Copy as Markdown</button>
+            <button id="delete-btn" class="btn danger">Delete</button>
+          </div>
+        </div>
+        <div id="messages" class="messages"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
