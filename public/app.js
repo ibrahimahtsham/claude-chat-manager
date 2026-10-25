@@ -220,7 +220,9 @@ function renderSearchResults(results, query) {
   for (const r of results) {
     const item = document.createElement('div');
     item.className = 'item';
-    const snippetHtml = escapeHtml(r.snippet).replace(re, '<mark>$1</mark>');
+    // snippets are cut from raw JSONL, so undo JSON string escapes
+    const snippet = r.snippet.replace(/\\[nrt]/g, ' ').replace(/\\"/g, '"').replace(/\s+/g, ' ');
+    const snippetHtml = escapeHtml(snippet).replace(re, '<mark>$1</mark>');
     item.innerHTML = `
       <div class="item-title">${escapeHtml(cleanText(r.title) || '(slash command)')}</div>
       <div class="item-meta"><span>${escapeHtml(shortCwd(r.projectCwd))}</span><span>${fmtDate(r.updatedAt)}</span></div>
