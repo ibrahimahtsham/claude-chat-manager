@@ -9,22 +9,30 @@
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="sidebar-header">
-        <h1>Claude Chats</h1>
+      <div class="brand">
+        <div><span class="c-claude">✻</span> <b>claude chat manager</b></div>
+        <div class="dim">~/.claude/projects</div>
       </div>
 
-      <div class="search-box">
-        <input id="search-input" type="text" placeholder="Search all chats..." />
-      </div>
+      <label class="search-box">
+        <span class="c-claude">/</span>
+        <input id="search-input" type="text" placeholder="search all chats" spellcheck="false" autocomplete="off" />
+      </label>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="projects">Projects</button>
-        <button class="tab" data-tab="trash">Trash</button>
-      </div>
+      <nav class="tabs">
+        <button class="tab active" data-tab="projects">chats</button>
+        <button class="tab" data-tab="memory">memory<span id="memory-badge" class="badge" hidden></span></button>
+        <button class="tab" data-tab="trash">trash</button>
+      </nav>
 
       <div id="panel-projects" class="panel active">
         <select id="project-select"></select>
         <div id="session-list" class="list"></div>
+      </div>
+
+      <div id="panel-memory" class="panel">
+        <select id="memory-project-select"></select>
+        <div id="memory-list" class="list"></div>
       </div>
 
       <div id="panel-trash" class="panel">
@@ -37,29 +45,68 @@
     </aside>
 
     <main class="main">
-      <div id="empty-state" class="empty-state">
-        <p>Select a chat on the left to view it.</p>
+      <div id="empty-state" class="view empty-state">
+        <div class="welcome">
+          <div><span class="c-claude">✻</span> <b>welcome</b></div>
+          <div class="dim">pick a chat on the left, or open <span class="c-fg">memory</span> to see<br />what Claude remembers between sessions.</div>
+        </div>
       </div>
 
-      <div id="session-view" class="session-view" hidden>
-        <div class="session-header">
-          <div class="session-title-row">
+      <section id="session-view" class="view" hidden>
+        <header class="view-header">
+          <div class="title-row">
             <h2 id="session-title"></h2>
-            <button id="rename-btn" class="icon-btn" title="Rename">✎</button>
+            <input id="rename-input" class="inline-input" type="text" spellcheck="false" hidden />
+            <button id="rename-btn" class="link-btn">rename</button>
           </div>
-          <div class="session-meta">
+          <div class="meta">
             <span id="session-cwd"></span>
             <span id="session-dates"></span>
           </div>
-          <div class="session-actions">
-            <button id="copy-md-btn" class="btn">Copy as Markdown</button>
-            <button id="delete-btn" class="btn danger">Delete</button>
+          <div class="actions">
+            <button id="copy-md-btn" class="btn">copy as markdown</button>
+            <button id="delete-btn" class="btn danger">move to trash</button>
           </div>
-        </div>
+        </header>
         <div id="messages" class="messages"></div>
-      </div>
+      </section>
+
+      <section id="memory-view" class="view" hidden>
+        <header class="view-header">
+          <div class="title-row">
+            <h2 id="memory-title"></h2>
+            <span id="memory-type" class="tag"></span>
+            <span id="memory-dirty" class="c-yellow" hidden>● unsaved</span>
+          </div>
+          <div id="memory-meta" class="meta"></div>
+          <label id="memory-filename-row" class="filename-row" hidden>
+            <span class="dim">file name</span>
+            <input id="memory-filename" class="inline-input" type="text" spellcheck="false" placeholder="feedback-something.md" />
+          </label>
+          <div class="actions">
+            <button id="memory-save-btn" class="btn">save <span class="dim">ctrl+s</span></button>
+            <button id="memory-revert-btn" class="btn">revert</button>
+            <button id="memory-delete-btn" class="btn danger">move to trash</button>
+          </div>
+          <div id="memory-file-issues" class="file-issues"></div>
+        </header>
+        <textarea id="memory-editor" class="editor" spellcheck="false"></textarea>
+      </section>
+
+      <section id="health-view" class="view" hidden>
+        <header class="view-header">
+          <div class="title-row"><h2>memory health check</h2></div>
+          <div id="health-meta" class="meta"></div>
+        </header>
+        <div id="health-list" class="health-list"></div>
+      </section>
     </main>
   </div>
+
+  <footer class="statusbar">
+    <span class="dim"><b class="c-fg">/</b> search · <b class="c-fg">esc</b> clear · <b class="c-fg">ctrl+s</b> save memory</span>
+    <span id="status-msg"></span>
+  </footer>
 
   <script src="/app.js"></script>
 </body>
